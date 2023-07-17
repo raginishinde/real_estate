@@ -123,6 +123,10 @@ Route::get('/gallery', function () {
     return view('/gallery');
 });
 
+Route::get('/User_login', [UserController::class, 'User_login']);
+Route::post('/user_checklogin', [UserController::class, 'user_checklogin']);
+Route::get('/user_dashboard', [UserController::class, 'user_dashboard']);
+
 Route::get('/user_dashboard', [UserController::class, 'user_dashboard']);
 
 
