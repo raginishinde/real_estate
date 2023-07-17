@@ -130,6 +130,12 @@ Route::post('/user_checklogin', [UserController::class, 'user_checklogin']);
 Route::get('/user_dashboard', [UserController::class, 'user_dashboard']);
 
 Route::get('/user_dashboard', [UserController::class, 'user_dashboard']);
+Route::get('/user_chat', [UserController::class, 'chat']);
+
+Route::group(['prefix' => 'customer'], function () {
+    Route::get('/chat', [CustomerChatController::class, 'chat']);
+});
+
 
 
 

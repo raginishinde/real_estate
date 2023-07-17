@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ url('/user_chat')}}">
+                        <a class="nav-link menu-link" href="{{ url('/customer/chat')}}">
                             <i class="ph-gauge"></i> <span data-key="t-widgets">Chat</span>
                         </a>
                     </li>
