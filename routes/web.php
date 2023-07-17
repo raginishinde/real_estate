@@ -3,6 +3,8 @@ use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminChatController;
+use App\Http\Controllers\CustomerChatController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -107,7 +109,7 @@ Route::any('editUser/{id}', [AdminController::class, 'editUser']);
 Route::post('/update_user', [AdminController::class, 'update_user']);
 Route::get('/delete_user/{id}', [AdminController::class, 'delete_user']);
 /*----------------------End Users----------------------------*/
-Route::get('/chat', [AdminController::class, 'chat']);
+Route::get('/chat', [AdminChatController::class, 'chat']);
 Route::post('/send-messages',[AdminController::class, 'SendMessages']);
 Route::post('/get-messages',[AdminController::class, 'GetMessages']);
 

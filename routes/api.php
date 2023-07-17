@@ -5,6 +5,8 @@
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminChatController;
+use App\Http\Controllers\CustomerChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,7 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::post('/send-messages',[AdminController::class, 'SendMessages']);
-Route::post('/get-messages',[AdminController::class, 'GetMessages']);
-Route::post('/get-accessories', [AdminController::class, 'getAccessories']);
-Route::post('/user_checklogin', [LoginController::class, 'user_checklogin']);
+Route::post('/send-messages',[AdminChatController::class, 'SendMessages']);
+Route::post('/get-messages',[AdminChatController::class, 'GetMessages']);
+Route::post('/get-accessories', [AdminChatController::class, 'getAccessories']);
+Route::post('/user_checklogin', [AdminChatController::class, 'user_checklogin']);
