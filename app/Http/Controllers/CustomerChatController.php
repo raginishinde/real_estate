@@ -18,10 +18,13 @@ class CustomerChatController extends Controller
         $list_users = DB::select("CALL list_user()");
         $list_groups = DB::select("CALL list_groups()");
 
+        $userId=session()->get('userId');
+
         $chat_list_users = array();
         foreach ($list_users as $list_user) {
             $user = array();
             $user['id'] = $list_user->id;
+            $user['userid'] = $userId;
             $user['type'] = "single";
             $user['name'] = $list_user->fname . " " . $list_user->lname;
             $user['members'] = "";
@@ -32,6 +35,7 @@ class CustomerChatController extends Controller
         foreach ($list_groups as $list_group) {
             $group = array();
             $group['id'] = $list_group->id;
+            $group['userid'] = $userId;
             $group['type'] = "group";
             $group['name'] = $list_group->grp_name;
             $group['members'] = $list_group->member_ids;
@@ -48,7 +52,7 @@ class CustomerChatController extends Controller
         $id = $request->input('id');
         $type = $request->input('type');
 
-        $get_id = '1';
+        $get_id = $request->input('userid');
         // print_r($get_id);exit;
         $session_username = 'Admin';
         //$session_id = Session::get('id');
@@ -195,13 +199,10 @@ class CustomerChatController extends Controller
     {
 
         $text = $request->input('text');
-        $data_id = '1';
-        $id = $request->input('id');
-        $type = $request->input('type');
-        // print_r($data_id); echo "<pre>"; print_r($id); echo"<pre>";
 
-        $sent_to_id = $id;
-        $sender_id = $data_id;
+        $sent_to_id = $request->input('id');
+        $sender_id = $request->input('userid');
+        $type = $request->input('type');
         $body = $text;
 
         $add_mssg = DB::select("CALL add_user_comment(?,?,?,?)", array($type, $sent_to_id, $sender_id, $body));

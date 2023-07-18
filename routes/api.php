@@ -19,7 +19,16 @@ use App\Http\Controllers\CustomerChatController;
 |
 */
 
-Route::post('/send-messages',[AdminChatController::class, 'SendMessages']);
-Route::post('/get-messages',[AdminChatController::class, 'GetMessages']);
-Route::post('/get-accessories', [AdminChatController::class, 'getAccessories']);
-Route::post('/user_checklogin', [AdminChatController::class, 'user_checklogin']);
+Route::group(['prefix' => 'admin'], function () {
+    Route::post('/send-messages', [AdminChatController::class, 'SendMessages']);
+    Route::post('/get-messages', [AdminChatController::class, 'GetMessages']);
+    Route::post('/get-accessories', [AdminChatController::class, 'getAccessories']);
+    Route::post('/user_checklogin', [AdminChatController::class, 'user_checklogin']);
+});
+
+Route::group(['prefix' => 'customer'], function () {
+    Route::post('/send-messages', [CustomerChatController::class, 'SendMessages']);
+    Route::post('/get-messages', [CustomerChatController::class, 'GetMessages']);
+    Route::post('/get-accessories', [CustomerChatController::class, 'getAccessories']);
+    Route::post('/user_checklogin', [CustomerChatController::class, 'user_checklogin']);
+});

@@ -1,4 +1,4 @@
-@extends('admin.layout.chatmaster')
+@extends('user.layout.chatmaster')
 @section('title', 'dasboard')
 
   <!-- Content Wrapper. Contains page content -->
@@ -45,7 +45,7 @@
           </div>
           <div class="inbox_chat">
             @foreach($chat_list as $chat)
-                <div class="chat_list active_chat" data-id = {{$chat['id']}} data-type = {{$chat['type']}} >
+                <div class="chat_list active_chat" data-id = {{$chat['id']}} data-userid = {{$chat['userid']}} data-type = {{$chat['type']}} >
                 <div class="chat_people">
                   <div class="chat_ib">  
                   
