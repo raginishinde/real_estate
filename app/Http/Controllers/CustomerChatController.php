@@ -51,7 +51,6 @@ class CustomerChatController extends Controller
     {
         $id = $request->input('id');
         $type = $request->input('type');
-
         $get_id = $request->input('userid');
         // print_r($get_id);exit;
         $session_username = 'Admin';
