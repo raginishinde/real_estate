@@ -162,16 +162,18 @@ class CustomerChatController extends Controller
                     $l = "";
 
                     if ($msgs->sender_id == $get_id) {
-
+                        $sender_details = DB::select("CALL get_user_info_by_id(?)", array($msgs->sender_id));
                         if (str_contains($msgs->body, 'http:') || str_contains($msgs->body, 'https:')) {
                             $name = basename($msgs->body);
                             $url = base64_encode($msgs->body);
                             $route = url(app()->getLocale() . '/file/' . $url . '/download');
                             $output .= "<div class='outgoing_msg'><div class='sent_msg'><a href='{$route}'>{$name}</a><span class='time_date'> {$time}    |    {$date}</span> </div></div>";
                         } else {
-                            $output .= "<div class='outgoing_msg'><div class='sent_msg'><p>{$msgs->body}</p><span class='time_date'> {$time}    |    {$date}</span> </div></div>";
+                            $output .= "<div class='outgoing_msg'><div class='sent_msg'><p>{$msgs->body}</p><span class='time_date'>You {$time}    |    {$date}</span> </div></div>";
                         }
                     } else {
+                        $sender_details = DB::select("CALL get_user_info_by_id(?)", array($msgs->sender_id));
+                        $sender_name=$sender_details[0]->fname." ".$sender_details[0]->lname;
                         // $output.= "<div class='incoming_msg'><div class='incoming_msg_img'><div style='border-radius: 50%;border: 1px solid #98a6ad;''><span style='color:#555d88;''>{$f[0]} {$l[0]}</span></div>  </div><div class='received_msg'><div class='received_withd_msg'><p>{$msgs->body}</p><span class='time_date'> {$time}    |    {$date}</span></div></div></div>";
 
                         if (str_contains($msgs->body, 'http:') || str_contains($msgs->body, 'https:')) {
@@ -180,7 +182,7 @@ class CustomerChatController extends Controller
                             $route = url(app()->getLocale() . '/file/' . $url . '/download');
                             $output .= "<div class='incoming_msg'><div class='incoming_msg_img'><div style='border-radius: 50%;border: 1px solid #98a6ad;''><img src='{$img}' class='' id='wizardPicturePreview' title=''></div></div><div class='received_msg'><div class='received_withd_msg'><a href='{$route}'>{$name}</a><span class='time_date'> {$time}    |    {$date}</span></div></div></div>";
                         } else {
-                            $output .= "<div class='incoming_msg'><div class='incoming_msg_img'><div style='border-radius: 50%;border: 1px solid #98a6ad;''></div></div><div class='received_msg'><div class='received_withd_msg'><p>{$msgs->body}</p><span class='time_date'> {$time}    |    {$date}</span></div></div></div>";
+                            $output .= "<div class='incoming_msg'><div class='incoming_msg_img'><div style='border-radius: 50%;border: 1px solid #98a6ad;''></div></div><div class='received_msg'><div class='received_withd_msg'><p>{$msgs->body}</p><span class='time_date'> {$sender_name} {$time}    |    {$date}</span></div></div></div>";
                         }
 
                     }

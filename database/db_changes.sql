@@ -1,0 +1,1 @@
+ALTER TABLE `messages` ADD `grp_member_id` INT(11) NULL DEFAULT '0' AFTER `body`;
