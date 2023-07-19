@@ -18,7 +18,7 @@ class CustomerChatController extends Controller
         $list_users = DB::select("CALL list_user()");
         $list_groups = DB::select("CALL list_groups()");
 
-        $userId=session()->get('userId');
+        $userId = session()->get('userId');
 
         $chat_list_users = array();
         foreach ($list_users as $list_user) {
@@ -33,13 +33,22 @@ class CustomerChatController extends Controller
 
         $chat_list_groups = array();
         foreach ($list_groups as $list_group) {
-            $group = array();
-            $group['id'] = $list_group->id;
-            $group['userid'] = $userId;
-            $group['type'] = "group";
-            $group['name'] = $list_group->grp_name;
-            $group['members'] = $list_group->member_ids;
-            $chat_list_groups[] = $group;
+
+            $userId = $userId; // Replace this with the actual session user ID
+
+            // Convert the comma-separated string of members to an array
+            $members = explode(", ", $list_group->member_ids);
+
+            // Check if the session user ID exists in the members array
+            if (in_array($userId, $members)) {
+                $group = array();
+                $group['id'] = $list_group->id;
+                $group['userid'] = $userId;
+                $group['type'] = "group";
+                $group['name'] = $list_group->grp_name;
+                $group['members'] = $list_group->member_ids; // Optionally keep the original members format
+                $chat_list_groups[] = $group;
+            }
         }
 
         $chat_list = array_merge($chat_list_users, $chat_list_groups);
@@ -175,7 +184,7 @@ class CustomerChatController extends Controller
                         }
                     } else {
                         $sender_details = DB::select("CALL get_user_info_by_id(?)", array($msgs->sender_id));
-                        $sender_name=$sender_details[0]->fname." ".$sender_details[0]->lname;
+                        $sender_name = $sender_details[0]->fname . " " . $sender_details[0]->lname;
                         // $output.= "<div class='incoming_msg'><div class='incoming_msg_img'><div style='border-radius: 50%;border: 1px solid #98a6ad;''><span style='color:#555d88;''>{$f[0]} {$l[0]}</span></div>  </div><div class='received_msg'><div class='received_withd_msg'><p>{$msgs->body}</p><span class='time_date'> {$time}    |    {$date}</span></div></div></div>";
 
                         if (str_contains($msgs->body, 'http:') || str_contains($msgs->body, 'https:')) {
