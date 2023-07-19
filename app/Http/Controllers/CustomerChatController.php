@@ -123,7 +123,7 @@ class CustomerChatController extends Controller
             //for group start
             $group = DB::table('groups')->where('id', $id)->first();
 
-            $inbox = DB::select("CALL get_admin_messages(?,?,?)", array($type, $get_id, $id));
+            $inbox = DB::select("CALL get_group_messages(?)", array($id));
 
             // $inbox = DB::table('messages')
             //     ->where('sent_to_id', $get_id) //senderid
@@ -138,7 +138,7 @@ class CustomerChatController extends Controller
             //     ->union($inbox)
             //     ->orderBy('id', 'asc')
             //     ->get();
-            $sent = DB::select("CALL get_admin_messages(?,?,?)", array($type, $get_id, $id));
+            $sent = DB::select("CALL get_group_messages(?)", array($id));
 
             $msgdata = $sent;
             //$msgdata['image']=$img;
