@@ -50,6 +50,7 @@ class AdminController extends Controller
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $remember)) {
             $user = Auth::user()->toArray();
             if (count($user) > 0) {
+                session()->put('userId', $user['id']);
                 return redirect('/dashboard');
             }
         } else {
