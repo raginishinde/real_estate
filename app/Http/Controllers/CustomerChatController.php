@@ -61,12 +61,14 @@ class CustomerChatController extends Controller
             $user = DB::table('users')->where('id', $id)->first();
             $inbox = DB::table('messages')
                 ->where('sent_to_id', $get_id) //senderid
+                ->where('type', 'single')
                 ->where('sender_id', $id); //sendtoid
             //->where('role','=','1');
             //->get();
 
             $sent = DB::table('messages')
                 ->where('sender_id', $get_id) //senderid
+                ->where('type', 'single')
                 ->where('sent_to_id', $id) //sendtoid
             //->where('role','=','2')
                 ->union($inbox)
