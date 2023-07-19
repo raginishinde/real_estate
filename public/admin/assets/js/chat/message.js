@@ -79,23 +79,25 @@ $(document).ready(function(){
         $(this).find('h5').addClass("activename");
         var id = $(this).attr('data-id');
         var type = $(this).attr('data-type');
-        $(".msg_send_btn").attr("data-id",id).attr("data-type", type);
+        var userid = $(this).attr('data-userid');
+        $(".msg_send_btn").attr("data-id",id).attr("data-type", type).attr("data-userid", userid);
         $(".type_msg").show();
         $('#dot_'+id).css({'display':'none'});
         
-        load_msgs(id, type);            
+        load_msgs(id, type, userid);            
     });
 
     //function load_msgs(id,page)
-    function load_msgs(id, type)
+    function load_msgs(id, type, userid)
     {
+        //alert(userid);
         $('.write_msg').removeAttr('readonly');                
         $.ajax({
             method: "POST",
             dataType: "json",
-            url: baseurl + "/api/admin/get-messages",
+            url: baseurl + "/api/customer/get-messages",
            // data: {'id': id,'page':page},
-           data: {'id': id,'type': type},
+           data: {'id': id,'type': type,'userid': userid},
             success: function(data){
                 // console.log(data);
                 $('.msg_history').empty();
@@ -130,9 +132,11 @@ $(document).ready(function(){
             }
             
             var id = $(this).attr('data-id');
+            var userid = $(this).attr('data-userid');
             var type = $(this).attr('data-type');
-                         
+                             
             form_data.append("id", id);
+            form_data.append("userid", userid);
             form_data.append("type", type);
             form_data.append("text", text);
             // let formData = new FormData(this);
@@ -145,7 +149,7 @@ $(document).ready(function(){
 
                 dataType: "json",
 
-                url: baseurl + "/api/admin/send-messages",
+                url: baseurl + "/api/customer/send-messages",
 
                 contentType: false,
 
@@ -165,7 +169,7 @@ $(document).ready(function(){
                     $('#filediv').hide();
                     //$('.msg_history').empty();
                     // $('.msg_history').append(data);    
-                    load_msgs(id, type);
+                    load_msgs(id, type, userid);
                 }
             });
         }                           
