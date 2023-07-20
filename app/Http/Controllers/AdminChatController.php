@@ -45,7 +45,7 @@ class AdminChatController extends Controller
         $chat_list = array_merge($chat_list_users, $chat_list_groups);
         //dd($chat_list);
 
-        return view('user.chat', compact('chat_list'));
+        return view('admin.chat', compact('chat_list'));
     }
     public function GetMessages(Request $request)
     {
